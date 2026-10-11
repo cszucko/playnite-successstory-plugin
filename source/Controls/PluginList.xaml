@@ -152,11 +152,7 @@
 
                             <DockPanel Grid.Column="1" Margin="10,0,0,0" LastChildFill="True">
                                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
-                                    <Grid DockPanel.Dock="Right">
-                                        <TextBlock TextAlignment="Right" Foreground="{DynamicResource TextBrush}"
-                                                   Visibility="{Binding IsUnlock, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                   Text="{Binding DateWhenUnlocked, FallbackValue='1982-12-15 00:08:23', Converter={StaticResource LocalDateTimeConverter}}" />
-
+                                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
                                         <Grid Width="120">
                                             <Grid.Style>
                                                 <Style TargetType="{x:Type Grid}">
@@ -168,6 +164,14 @@
                                                         <DataTrigger Binding="{Binding Progression}" Value="{x:Null}">
                                                             <Setter Property="Visibility" Value="Collapsed" />
                                                         </DataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenProgress}" Value="False" />
+                                                                <Condition Binding="{Binding IsHidden}" Value="True" />
+                                                                <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Grid.Style>
@@ -176,7 +180,38 @@
                                                          Value="{Binding Progression.Value}" />
                                             <Label Content="{Binding Progression.Progression}" HorizontalAlignment="Center" />
                                         </Grid>
-                                    </Grid>
+
+                                        <TextBlock TextAlignment="Right" Foreground="{DynamicResource TextBrush}"
+                                                   Visibility="{Binding IsUnlock, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                   Text="{Binding DateWhenUnlocked, FallbackValue='1982-12-15 00:08:23', Converter={StaticResource LocalDateTimeConverter}}" />
+
+                                        <TextBlock Name="PART_LockIndicator" FontFamily="{DynamicResource FontIcoFont}" FontSize="14"
+                                                   VerticalAlignment="Center" Text="&#xec61;" Width="20" TextAlignment="Center"
+                                                   Foreground="{DynamicResource TextBrushDarker}" Opacity="0.6">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                                <Condition Binding="{Binding Progression}" Value="{x:Null}" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenProgress}" Value="False" />
+                                                                <Condition Binding="{Binding IsHidden}" Value="True" />
+                                                                <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
 
                                     <controls1:TextBlockTrimmed Text="{Binding Name, FallbackValue='Achievement Title'}" Foreground="{DynamicResource TextBrush}" TextTrimming="CharacterEllipsis">
                                         <TextBlock.Style>

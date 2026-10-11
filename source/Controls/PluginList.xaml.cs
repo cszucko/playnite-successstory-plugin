@@ -291,6 +291,7 @@ namespace SuccessStory.Controls
             bool ShowHiddenIcon = PluginDatabase.PluginSettings.Settings.ShowHiddenIcon;
             bool ShowHiddenTitle = PluginDatabase.PluginSettings.Settings.ShowHiddenTitle;
             bool ShowHiddenDescription = PluginDatabase.PluginSettings.Settings.ShowHiddenDescription;
+            bool ShowHiddenProgress = PluginDatabase.PluginSettings.Settings.ShowHiddenProgress;
             double Height = PluginDatabase.PluginSettings.Settings.IntegrationListHeight;
             double IconHeight = PluginDatabase.PluginSettings.Settings.IntegrationListIconHeight;
             if (IgnoreSettings)
@@ -311,6 +312,7 @@ namespace SuccessStory.Controls
             ControlDataContext.ShowHiddenIcon = ShowHiddenIcon;
             ControlDataContext.ShowHiddenTitle = ShowHiddenTitle;
             ControlDataContext.ShowHiddenDescription = ShowHiddenDescription;
+            ControlDataContext.ShowHiddenProgress = ShowHiddenProgress;
             ControlDataContext.Height = Height;
             ControlDataContext.IconHeight = IconHeight;
 
@@ -620,6 +622,9 @@ namespace SuccessStory.Controls
 
         private bool showHiddenDescription;
         public bool ShowHiddenDescription { get => showHiddenDescription; set => SetValue(ref showHiddenDescription, value); }
+
+        private bool showHiddenProgress;
+        public bool ShowHiddenProgress { get => showHiddenProgress; set => SetValue(ref showHiddenProgress, value); }
 
         private double height;
         public double Height { get => height; set => SetValue(ref height, value); }
