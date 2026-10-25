@@ -328,10 +328,12 @@ namespace SuccessStory.Controls
             ControlDataContext.ItemsSource = new ObservableCollection<Achievement>();
 
 
+            GameName = string.Empty;
             foreach (object item in PART_TabControl.Items)
             {
                 ((TabItem)item).Visibility = Visibility.Collapsed;
                 ((TabItem)item).Header = string.Empty;
+                ((TabItem)item).Tag = null;
             }
 
 
