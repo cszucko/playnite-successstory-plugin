@@ -349,7 +349,7 @@ namespace SuccessStory.Controls
             GameAchievements gameAchievements = (GameAchievements)pluginGameData;
             // gameAchievements.OrderAchievement = PluginDatabase.PluginSettings.Settings.IntegrationListOrderAchievement;
 
-            if (!gameAchievements.Items.FirstOrDefault().CategoryRpcs3.IsNullOrEmpty())
+            if (!(gameAchievements.Items?.FirstOrDefault()?.CategoryRpcs3.IsNullOrEmpty() ?? true))
             {
                 List<string> Categories = gameAchievements.Items.Select(x => x.CategoryRpcs3).Distinct().ToList();
                 Categories.ForEach((x, idx) =>
@@ -364,7 +364,7 @@ namespace SuccessStory.Controls
             }
             else
             {
-                ControlDataContext.ItemsSource = gameAchievements.GetOrderItems(PluginDatabase.PluginSettings.Settings.IntegrationListOrderAchievement);
+                SetOrder(GameName);
             }
 
             UpdateHardcoreMode(ShowHardcore);
@@ -373,18 +373,7 @@ namespace SuccessStory.Controls
         public void SetDataCategory(string categoryName)
         {
             this.CategoryName = categoryName;
-            if (GameContext == null)
-            {
-                return;
-            }
-
-            GameAchievements gameAchievements = PluginDatabase.Get(GameContext, true);
-            // gameAchievements.OrderAchievement = OrderAchievement;
-
-            ObservableCollection<Achievement> achievements = gameAchievements.GetOrderItems(OrderAchievement)
-                .Where(x => x.Category.IsEqual(categoryName))
-                .ToObservable();
-            ControlDataContext.ItemsSource = achievements;
+            SetOrder(GameName);
         }
 
         #region Events
@@ -534,6 +523,11 @@ namespace SuccessStory.Controls
 
         private void SetOrder(string gameName = "")
         {
+            if (OrderAchievement == null)
+            {
+                return;
+            }
+
             OrderAchievement.OrderGroupByUnlocked = (bool)PART_SortGroupBy.IsChecked;
 
             switch (NameIndex)
@@ -602,16 +596,23 @@ namespace SuccessStory.Controls
             if (GameContext != null)
             {
                 GameAchievements gameAchievements = PluginDatabase.Get(GameContext, true);
-
-                ObservableCollection<Achievement> achievements = gameAchievements.GetOrderItems(OrderAchievement);
-                if (!CategoryName.IsNullOrEmpty())
+                if (gameAchievements?.Items == null)
                 {
-                    achievements = achievements.Where(x => x.Category.IsEqual(CategoryName)).ToObservable();
+                    return;
                 }
 
-                ControlDataContext.ItemsSource = gameName.IsNullOrEmpty()
-                    ? achievements
-                    : achievements.Where(x => x.CategoryRpcs3.IsEqual(gameName)).ToObservable();
+                IEnumerable<Achievement> achievements = gameAchievements.GetOrderItems(OrderAchievement);
+                if (!CategoryName.IsNullOrEmpty())
+                {
+                    achievements = achievements.Where(x => x.Category.IsEqual(CategoryName));
+                }
+
+                if (!gameName.IsNullOrEmpty())
+                {
+                    achievements = achievements.Where(x => x.CategoryRpcs3.IsEqual(gameName));
+                }
+
+                ControlDataContext.ItemsSource = achievements.ToObservable();
             }
         }
 
