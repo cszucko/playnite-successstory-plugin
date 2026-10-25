@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace SuccessStory.Controls
 {
@@ -81,6 +82,7 @@ namespace SuccessStory.Controls
         public PluginList()
         {
             InitializeComponent();
+            PART_OptionsPopup.CustomPopupPlacementCallback = AlignPopupBottomRight;
             DataContext = ControlDataContext;
 
             OrderAchievement = Serialization.GetClone(PluginDatabase.PluginSettings.Settings.IntegrationListOrderAchievement);
@@ -420,6 +422,14 @@ namespace SuccessStory.Controls
         #endregion
 
         #region Filter
+
+        private CustomPopupPlacement[] AlignPopupBottomRight(Size popupSize, Size targetSize, Point offset)
+        {
+            return new[]
+            {
+                new CustomPopupPlacement(new Point(targetSize.Width - popupSize.Width, targetSize.Height), PopupPrimaryAxis.Horizontal)
+            };
+        }
 
         private void PART_SortName_Click(object sender, RoutedEventArgs e)
         {

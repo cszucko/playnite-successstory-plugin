@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="1" Name="PART_SortName" Content="&#xea64;" FontFamily="{DynamicResource CommonFont}" FontSize="16" Click="PART_SortName_Click" />
@@ -56,9 +56,20 @@
             <Button Grid.Column="5" Name="PART_SortRarity" Content="&#xea68;" FontFamily="{DynamicResource CommonFont}" FontSize="16" Click="PART_SortRarity_Click" />
             <Label Grid.Column="5" Name="PART_SortRarityOrder" Content="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,2,0" />
 
-            <CheckBox Grid.Column="7" Name="PART_SortGroupBy" Checked="PART_SortGroupBy_Checked" Unchecked="PART_SortGroupBy_Unchecked" VerticalAlignment="Center">
-                <Label Content="{DynamicResource LOCSuccessStoryGroupByUnlocked}" />
-            </CheckBox>
+            <ToggleButton Grid.Column="7" Name="PART_OptionsButton" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" FontSize="16" Background="{DynamicResource ButtonBackgroundBrush}" />
+            <Popup Name="PART_OptionsPopup" Placement="Custom" PlacementTarget="{Binding ElementName=PART_OptionsButton}" Focusable="False" AllowsTransparency="True"
+                   IsOpen="{Binding IsChecked, ElementName=PART_OptionsButton, Mode=TwoWay, Delay=100}" StaysOpen="False">
+                <Border Background="{DynamicResource PopupBackgroundBrush}"
+                        BorderThickness="{DynamicResource PopupBorderThickness}"
+                        BorderBrush="{DynamicResource PopupBorderBrush}"
+                        Padding="10">
+                    <StackPanel>
+                        <CheckBox Name="PART_SortGroupBy" Checked="PART_SortGroupBy_Checked" Unchecked="PART_SortGroupBy_Unchecked" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource LOCSuccessStoryGroupByUnlocked}" />
+                        </CheckBox>
+                    </StackPanel>
+                </Border>
+            </Popup>
         </Grid>
 
         <Grid Margin="0,0,0,10" Grid.Row="1">
