@@ -74,7 +74,15 @@ namespace SuccessStory.Controls
             nameof(ShowHardcore),
             typeof(bool),
             typeof(PluginList),
-            new FrameworkPropertyMetadata(false, ControlsPropertyChangedCallback));
+            new FrameworkPropertyMetadata(false, OnShowHardcoreChanged));
+
+        private static void OnShowHardcoreChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is PluginList obj && e.NewValue != e.OldValue)
+            {
+                obj.SetOrder(obj.GameName);
+            }
+        }
 
         #endregion
 
@@ -368,8 +376,6 @@ namespace SuccessStory.Controls
             {
                 SetOrder(GameName);
             }
-
-            UpdateHardcoreMode(ShowHardcore);
         }
 
         public void SetDataCategory(string categoryName)
@@ -603,6 +609,8 @@ namespace SuccessStory.Controls
                     return;
                 }
 
+                gameAchievements.Items.ForEach(x => x.ShowHardcore = ShowHardcore);
+
                 IEnumerable<Achievement> achievements = gameAchievements.GetOrderItems(OrderAchievement);
                 if (!CategoryName.IsNullOrEmpty())
                 {
@@ -619,23 +627,6 @@ namespace SuccessStory.Controls
         }
 
         #endregion
-
-        private void UpdateHardcoreMode(bool showHardcore)
-        {
-            if (ControlDataContext?.ItemsSource == null)
-            {
-                return;
-            }
-
-            var updatedList = ControlDataContext.ItemsSource.Select(x =>
-            {
-                x.ShowHardcore = showHardcore;
-                return x;
-            }).ToList();
-
-            ControlDataContext.ItemsSource = new ObservableCollection<Achievement>(updatedList);
-            SetOrder(GameName);
-        }
     }
 
 
