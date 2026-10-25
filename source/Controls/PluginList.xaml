@@ -67,6 +67,9 @@
                         <CheckBox Name="PART_SortGroupBy" Checked="PART_SortGroupBy_Checked" Unchecked="PART_SortGroupBy_Unchecked" VerticalAlignment="Center">
                             <Label Content="{DynamicResource LOCSuccessStoryGroupByUnlocked}" />
                         </CheckBox>
+                        <CheckBox Name="PART_RevealHidden" Margin="0,8,0,0" Checked="PART_RevealHidden_Checked" Unchecked="PART_RevealHidden_Unchecked" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource LOCSuccessStoryRevealHiddenAchievements}" />
+                        </CheckBox>
                     </StackPanel>
                 </Border>
             </Popup>
@@ -138,6 +141,7 @@
                                                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenIcon}" Value="False" />
                                                     <Condition Binding="{Binding IsHidden}" Value="True" />
                                                     <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.RevealHidden}" Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
@@ -180,6 +184,7 @@
                                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenProgress}" Value="False" />
                                                                 <Condition Binding="{Binding IsHidden}" Value="True" />
                                                                 <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.RevealHidden}" Value="False" />
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Collapsed" />
                                                         </MultiDataTrigger>
@@ -215,6 +220,7 @@
                                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenProgress}" Value="False" />
                                                                 <Condition Binding="{Binding IsHidden}" Value="True" />
                                                                 <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.RevealHidden}" Value="False" />
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger>
@@ -233,6 +239,7 @@
                                                             <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenTitle}" Value="False" />
                                                             <Condition Binding="{Binding IsHidden}" Value="True" />
                                                             <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.RevealHidden}" Value="False" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Effect">
                                                             <Setter.Value>
@@ -267,6 +274,7 @@
                                                         <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.ShowHiddenDescription}" Value="False" />
                                                         <Condition Binding="{Binding IsHidden}" Value="True" />
                                                         <Condition Binding="{Binding IsUnlock}" Value="False" />
+                                                        <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.RevealHidden}" Value="False" />
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Effect">
                                                         <Setter.Value>

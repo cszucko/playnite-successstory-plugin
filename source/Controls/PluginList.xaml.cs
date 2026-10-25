@@ -315,8 +315,12 @@ namespace SuccessStory.Controls
             ControlDataContext.ShowHiddenTitle = ShowHiddenTitle;
             ControlDataContext.ShowHiddenDescription = ShowHiddenDescription;
             ControlDataContext.ShowHiddenProgress = ShowHiddenProgress;
+            ControlDataContext.RevealHidden = false;
             ControlDataContext.Height = Height;
             ControlDataContext.IconHeight = IconHeight;
+
+            PART_RevealHidden.IsChecked = false;
+            PART_RevealHidden.IsEnabled = !ShowHiddenIcon || !ShowHiddenTitle || !ShowHiddenDescription || !ShowHiddenProgress;
 
             ControlDataContext.ItemSize = new Size(300, 65);
             ControlDataContext.ColDefinied = ColDefinied;
@@ -486,6 +490,22 @@ namespace SuccessStory.Controls
             SetOrder(GameName);
         }
 
+        private void PART_RevealHidden_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ControlDataContext != null)
+            {
+                ControlDataContext.RevealHidden = true;
+            }
+        }
+
+        private void PART_RevealHidden_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (ControlDataContext != null)
+            {
+                ControlDataContext.RevealHidden = false;
+            }
+        }
+
 
         private void ChangeIndex()
         {
@@ -635,6 +655,9 @@ namespace SuccessStory.Controls
 
         private bool showHiddenProgress;
         public bool ShowHiddenProgress { get => showHiddenProgress; set => SetValue(ref showHiddenProgress, value); }
+
+        private bool revealHidden;
+        public bool RevealHidden { get => revealHidden; set => SetValue(ref revealHidden, value); }
 
         private double height;
         public double Height { get => height; set => SetValue(ref height, value); }
