@@ -45,6 +45,8 @@
                 <ColumnDefinition Width="40" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="1" Name="PART_SortName" Content="&#xea64;" FontFamily="{DynamicResource CommonFont}" FontSize="16" Click="PART_SortName_Click" />
@@ -56,7 +58,44 @@
             <Button Grid.Column="5" Name="PART_SortRarity" Content="&#xea68;" FontFamily="{DynamicResource CommonFont}" FontSize="16" Click="PART_SortRarity_Click" />
             <Label Grid.Column="5" Name="PART_SortRarityOrder" Content="3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,2,0" />
 
-            <ToggleButton Grid.Column="7" Name="PART_OptionsButton" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" FontSize="16" Background="{DynamicResource ButtonBackgroundBrush}" />
+            <ToggleButton Grid.Column="7" Name="PART_FilterButton" Content="&#xef29;" FontFamily="{DynamicResource FontIcoFont}" FontSize="16" Background="{DynamicResource ButtonBackgroundBrush}" />
+            <Ellipse Grid.Column="7" Name="PART_FilterActiveIndicator" Width="6" Height="6" Fill="{DynamicResource GlyphBrush}"
+                     VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,4,4" IsHitTestVisible="False" Visibility="Collapsed" />
+            <Popup Name="PART_FilterPopup" Placement="Custom" PlacementTarget="{Binding ElementName=PART_FilterButton}" Focusable="False" AllowsTransparency="True"
+                   IsOpen="{Binding IsChecked, ElementName=PART_FilterButton, Mode=TwoWay, Delay=100}" StaysOpen="False">
+                <Border Background="{DynamicResource PopupBackgroundBrush}"
+                        BorderThickness="{DynamicResource PopupBorderThickness}"
+                        BorderBrush="{DynamicResource PopupBorderBrush}"
+                        Padding="10">
+                    <StackPanel>
+                        <StackPanel>
+                            <RadioButton Name="PART_FilterLockAll" IsChecked="True" Checked="PART_Filter_Checked" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource LOCSuccessStoryFilterAll}" />
+                            </RadioButton>
+                            <RadioButton Name="PART_FilterLocked" Margin="0,8,0,0" Checked="PART_Filter_Checked" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource LOCSuccessStoryFilterLocked}" />
+                            </RadioButton>
+                            <RadioButton Name="PART_FilterUnlocked" Margin="0,8,0,0" Checked="PART_Filter_Checked" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource LOCSuccessStoryFilterUnlocked}" />
+                            </RadioButton>
+                        </StackPanel>
+                        <Separator Margin="0,8" />
+                        <StackPanel>
+                            <RadioButton Name="PART_FilterHiddenAll" IsChecked="True" Checked="PART_Filter_Checked" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource LOCSuccessStoryFilterAll}" />
+                            </RadioButton>
+                            <RadioButton Name="PART_FilterHidden" Margin="0,8,0,0" Checked="PART_Filter_Checked" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource LOCSuccessStoryFilterHidden}" />
+                            </RadioButton>
+                            <RadioButton Name="PART_FilterStandard" Margin="0,8,0,0" Checked="PART_Filter_Checked" VerticalAlignment="Center">
+                                <Label Content="{DynamicResource LOCSuccessStoryFilterStandard}" />
+                            </RadioButton>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <ToggleButton Grid.Column="9" Name="PART_OptionsButton" Content="&#xefe2;" FontFamily="{DynamicResource FontIcoFont}" FontSize="16" Background="{DynamicResource ButtonBackgroundBrush}" />
             <Popup Name="PART_OptionsPopup" Placement="Custom" PlacementTarget="{Binding ElementName=PART_OptionsButton}" Focusable="False" AllowsTransparency="True"
                    IsOpen="{Binding IsChecked, ElementName=PART_OptionsButton, Mode=TwoWay, Delay=100}" StaysOpen="False">
                 <Border Background="{DynamicResource PopupBackgroundBrush}"

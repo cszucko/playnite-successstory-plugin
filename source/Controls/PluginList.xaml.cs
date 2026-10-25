@@ -90,6 +90,7 @@ namespace SuccessStory.Controls
         public PluginList()
         {
             InitializeComponent();
+            PART_FilterPopup.CustomPopupPlacementCallback = AlignPopupBottomRight;
             PART_OptionsPopup.CustomPopupPlacementCallback = AlignPopupBottomRight;
             DataContext = ControlDataContext;
 
@@ -327,6 +328,10 @@ namespace SuccessStory.Controls
             ControlDataContext.Height = Height;
             ControlDataContext.IconHeight = IconHeight;
 
+            PART_FilterLockAll.IsChecked = true;
+            PART_FilterHiddenAll.IsChecked = true;
+            PART_FilterActiveIndicator.Visibility = Visibility.Collapsed;
+
             PART_RevealHidden.IsChecked = false;
             PART_RevealHidden.IsEnabled = !ShowHiddenIcon || !ShowHiddenTitle || !ShowHiddenDescription || !ShowHiddenProgress;
 
@@ -487,6 +492,14 @@ namespace SuccessStory.Controls
             SetOrder(GameName);
         }
 
+        private void PART_Filter_Checked(object sender, RoutedEventArgs e)
+        {
+            if (PART_FilterPopup?.IsOpen == true)
+            {
+                SetOrder(GameName);
+            }
+        }
+
         private void PART_RevealHidden_Checked(object sender, RoutedEventArgs e)
         {
             if (ControlDataContext != null)
@@ -601,6 +614,15 @@ namespace SuccessStory.Controls
                     break;
             }
 
+            bool isFilterActive = (PART_FilterLocked?.IsChecked == true) ||
+                (PART_FilterUnlocked?.IsChecked == true) ||
+                (PART_FilterHidden?.IsChecked == true) ||
+                (PART_FilterStandard?.IsChecked == true);
+            if (PART_FilterActiveIndicator != null)
+            {
+                PART_FilterActiveIndicator.Visibility = isFilterActive ? Visibility.Visible : Visibility.Collapsed;
+            }
+
             if (GameContext != null)
             {
                 GameAchievements gameAchievements = PluginDatabase.Get(GameContext, true);
@@ -620,6 +642,24 @@ namespace SuccessStory.Controls
                 if (!gameName.IsNullOrEmpty())
                 {
                     achievements = achievements.Where(x => x.CategoryRpcs3.IsEqual(gameName));
+                }
+
+                if (PART_FilterLocked?.IsChecked == true)
+                {
+                    achievements = achievements.Where(x => !x.IsUnlock);
+                }
+                else if (PART_FilterUnlocked?.IsChecked == true)
+                {
+                    achievements = achievements.Where(x => x.IsUnlock);
+                }
+
+                if (PART_FilterHidden?.IsChecked == true)
+                {
+                    achievements = achievements.Where(x => x.IsHidden);
+                }
+                else if (PART_FilterStandard?.IsChecked == true)
+                {
+                    achievements = achievements.Where(x => !x.IsHidden);
                 }
 
                 ControlDataContext.ItemsSource = achievements.ToObservable();

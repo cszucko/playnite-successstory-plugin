@@ -187,6 +187,11 @@ Especially useful for Xbox achievements with their larges images which are reduc
     <sys:String x:Key="LOCSuccessStoryAchievementSorting">Achievements sorting</sys:String>
     <sys:String x:Key="LOCSuccessStoryGroupByUnlocked">Group by unlocked when possible</sys:String>
     <sys:String x:Key="LOCSuccessStoryRevealHiddenAchievements">Reveal hidden achievements</sys:String>
+    <sys:String x:Key="LOCSuccessStoryFilterAll">All</sys:String>
+    <sys:String x:Key="LOCSuccessStoryFilterLocked">Locked</sys:String>
+    <sys:String x:Key="LOCSuccessStoryFilterUnlocked">Unlocked</sys:String>
+    <sys:String x:Key="LOCSuccessStoryFilterHidden">Hidden</sys:String>
+    <sys:String x:Key="LOCSuccessStoryFilterStandard">Standard</sys:String>
 
     <sys:String x:Key="LOCSuccessStoryFeatureAchievement">Feature to add if the game has achievements</sys:String>
 
